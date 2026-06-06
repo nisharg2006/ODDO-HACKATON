@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VendorBridge - Vendor Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 flex">
+    <aside class="w-64 bg-slate-900 text-white min-h-screen p-5 flex flex-col justify-between">
+        <div>
+            <div class="text-2xl font-bold text-indigo-400 mb-8 px-2">VendorBridge</div>
+            <nav class="space-y-2">
+                <a href="dashboard.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Dashboard</a>
+                <a href="vendors.html" class="block px-4 py-2.5 rounded bg-slate-800 text-white font-medium">Vendors</a>
+                <a href="rfqs.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">RFQs</a>
+                <a href="quotations.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Quotations</a>
+                <a href="approvals.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Approvals</a>
+                <a href="documents.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Orders & Invoices</a>
+                <a href="logs-reports.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Logs & Analytics</a>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8">
+        <h1 class="text-3xl font-bold text-slate-800 mb-6">Vendor Database</h1>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm h-fit">
+                <h3 class="text-lg font-bold text-slate-800 mb-4">Register New Vendor</h3>
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Company Name</label>
+                        <input type="text" class="w-full mt-1 p-2 border border-slate-300 rounded focus:ring-1 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Category</label>
+                        <select class="w-full mt-1 p-2 border border-slate-300 rounded focus:ring-1 focus:ring-indigo-500 outline-none">
+                            <option>Hardware IT</option>
+                            <option>Office Stationery</option>
+                            <option>Networking Components</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">GSTIN Details</label>
+                        <input type="text" placeholder="24AAAAA0000A1Z1" class="w-full mt-1 p-2 border border-slate-300 rounded focus:ring-1 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Contact Email</label>
+                        <input type="email" class="w-full mt-1 p-2 border border-slate-300 rounded focus:ring-1 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <button type="button" class="w-full bg-indigo-600 text-white py-2 rounded font-medium hover:bg-indigo-700">Save Vendor</button>
+                </form>
+            </div>
+
+            <div class="lg:col-span-2 bg-white p-6 rounded-xl border border-slate-100 shadow-sm">
+                <h3 class="text-lg font-bold text-slate-800 mb-4">Onboarded Vendors</h3>
+                <div class="space-y-4">
+                    <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 flex justify-between items-center">
+                        <div>
+                            <h4 class="font-bold text-slate-800">Matrix Tech Solved Ltd.</h4>
+                            <p class="text-xs text-slate-500">GSTIN: 24ABCDE1234F1Z5 | Category: Hardware IT</p>
+                            <p class="text-sm text-indigo-600 mt-1">sales@matrixtech.com</p>
+                        </div>
+                        <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-semibold">Verified</span>
+                    </div>
+                    <div class="p-4 border border-slate-100 rounded-lg bg-slate-50 flex justify-between items-center">
+                        <div>
+                            <h4 class="font-bold text-slate-800">Apex Networking Hub</h4>
+                            <p class="text-xs text-slate-500">GSTIN: 24FGHIJ5678K2Z0 | Category: Networking</p>
+                            <p class="text-sm text-indigo-600 mt-1">rfq@apexnet.in</p>
+                        </div>
+                        <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-semibold">Verified</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

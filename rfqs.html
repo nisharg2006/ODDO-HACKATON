@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VendorBridge - RFQ Creation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 flex">
+    <aside class="w-64 bg-slate-900 text-white min-h-screen p-5 flex flex-col justify-between">
+        <div>
+            <div class="text-2xl font-bold text-indigo-400 mb-8 px-2">VendorBridge</div>
+            <nav class="space-y-2">
+                <a href="dashboard.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Dashboard</a>
+                <a href="vendors.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Vendors</a>
+                <a href="rfqs.html" class="block px-4 py-2.5 rounded bg-slate-800 text-white font-medium">RFQs</a>
+                <a href="quotations.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Quotations</a>
+                <a href="approvals.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Approvals</a>
+                <a href="documents.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Orders & Invoices</a>
+                <a href="logs-reports.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Logs & Analytics</a>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8">
+        <h1 class="text-3xl font-bold text-slate-800 mb-6">Create New RFQ Pipeline</h1>
+        
+        <div class="bg-white p-8 rounded-xl border border-slate-100 shadow-sm max-w-3xl">
+            <form class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">RFQ Title / Subject</label>
+                        <input type="text" placeholder="e.g. Server Infrastructure Upgrade" class="w-full mt-1 p-2.5 border border-slate-300 rounded-lg focus:ring-1 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Submission Deadline</label>
+                        <input type="date" class="w-full mt-1 p-2.5 border border-slate-300 rounded-lg focus:ring-1 focus:ring-indigo-500 outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">Product / Service Specifications</label>
+                    <textarea rows="4" placeholder="Detailed description of components, quantities, model metrics required..." class="w-full mt-1 p-2.5 border border-slate-300 rounded-lg focus:ring-1 focus:ring-indigo-500 outline-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Select Target Vendor Category</label>
+                        <select class="w-full mt-1 p-2.5 border border-slate-300 rounded-lg focus:ring-1 focus:ring-indigo-500 outline-none">
+                            <option>Hardware IT Vendors</option>
+                            <option>All Network Vendors</option>
+                            <option>General Support & Logistics</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Technical Document Attachment</label>
+                        <input type="file" class="w-full mt-1 text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                    <button type="button" class="px-5 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50">Save Draft</button>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-semibold shadow-sm">Dispatch RFQ</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

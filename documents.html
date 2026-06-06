@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VendorBridge - Official Procurement Docs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 flex">
+    <aside class="w-64 bg-slate-900 text-white min-h-screen p-5 flex flex-col justify-between">
+        <div>
+            <div class="text-2xl font-bold text-indigo-400 mb-8 px-2">VendorBridge</div>
+            <nav class="space-y-2">
+                <a href="dashboard.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Dashboard</a>
+                <a href="vendors.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Vendors</a>
+                <a href="rfqs.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">RFQs</a>
+                <a href="quotations.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Quotations</a>
+                <a href="approvals.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Approvals</a>
+                <a href="documents.html" class="block px-4 py-2.5 rounded bg-slate-800 text-white font-medium">Orders & Invoices</a>
+                <a href="logs-reports.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Logs & Analytics</a>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8">
+        <h1 class="text-3xl font-bold text-slate-800 mb-6">Generated Logistics Invoices</h1>
+
+        <div id="invoice-block" class="bg-white p-8 rounded-xl border border-slate-200 shadow-md max-w-3xl mx-auto">
+            <div class="flex justify-between items-start mb-8">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-slate-800 tracking-tight">VENDORBRIDGE CORP</h2>
+                    <p class="text-xs text-slate-500">Ahmedabad, Gujarat, India</p>
+                </div>
+                <div class="text-right">
+                    <h3 class="text-xl font-bold text-indigo-600">INVOICE</h3>
+                    <p class="text-sm text-slate-600 mt-1">Invoice ID: <span class="font-semibold">INV-2026-8942</span></p>
+                    <p class="text-xs text-slate-400">Date: 06-Jun-2026</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-8 text-sm">
+                <div>
+                    <span class="text-xs text-slate-400 uppercase block font-medium">Billed To:</span>
+                    <strong class="text-slate-800 block">Enterprise Infrastructure Org</strong>
+                    <p class="text-slate-500 text-xs">GSTIN: 24COMPNEW30231</p>
+                </div>
+                <div>
+                    <span class="text-xs text-slate-400 uppercase block font-medium">Source Vendor:</span>
+                    <strong class="text-slate-800 block">Matrix Tech Solved Ltd.</strong>
+                    <p class="text-slate-500 text-xs">GSTIN: 24ABCDE1234F1Z5</p>
+                </div>
+            </div>
+
+            <table class="w-full text-left text-sm border-collapse mb-6">
+                <thead>
+                    <tr class="bg-slate-100 text-slate-700 font-semibold uppercase text-xs">
+                        <th class="p-3">Item Metric Description</th>
+                        <th class="p-3 text-center">Qty</th>
+                        <th class="p-3 text-right">Unit Price</th>
+                        <th class="p-3 text-right">Line Total</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-600">
+                    <tr>
+                        <td class="p-3 font-medium text-slate-800">High-Core Cluster Server Modules</td>
+                        <td class="p-3 text-center">2</td>
+                        <td class="p-3 text-right">₹1,70,000</td>
+                        <td class="p-3 text-right">₹3,40,000</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="flex justify-end text-sm">
+                <div class="w-64 space-y-2 border-t border-slate-200 pt-4">
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">Subtotal:</span>
+                        <span class="font-medium text-slate-800">₹3,40,000</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">IGST (18%):</span>
+                        <span class="font-medium text-slate-800">₹61,200</span>
+                    </div>
+                    <hr class="border-slate-100">
+                    <div class="flex justify-between text-base font-bold">
+                        <span class="text-indigo-600">Grand Total:</span>
+                        <span class="text-slate-900">₹4,01,200</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-100 flex justify-between items-center print:hidden">
+                <p class="text-xs text-slate-400">System verified document. Auto-generated PO Reference: #PO-9001</p>
+                <div class="flex gap-2">
+                    <button onclick="window.print()" class="px-4 py-2 bg-slate-800 text-white rounded text-sm font-semibold hover:bg-slate-900">Print / Save PDF</button>
+                    <button onclick="alert('Invoice dispatched via email successfully!')" class="px-4 py-2 bg-indigo-600 text-white rounded text-sm font-semibold hover:bg-indigo-700">Dispatch Email</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
