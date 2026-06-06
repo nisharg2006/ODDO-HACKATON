@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VendorBridge - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeSlideUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-slide-up {
+            animation: fadeSlideUp 0.7s ease-out forwards;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255,255,255,0.2) inset;
+        }
+    </style>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-100 via-indigo-50 to-slate-200 flex items-center justify-center h-screen relative overflow-hidden">
+    <!-- Decorative background elements -->
+    <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style="animation-delay: 2s;"></div>
+
+    <div class="glass-card p-10 rounded-3xl w-full max-w-[440px] animate-fade-slide-up relative z-10">
+        <div class="text-center mb-8">
+            <div class="mx-auto bg-gradient-to-tr from-indigo-600 to-purple-600 w-16 h-16 rounded-2xl flex items-center justify-center mb-5 shadow-lg shadow-indigo-500/30 transform hover:scale-105 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+            </div>
+            <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight">Vendor<span class="text-indigo-600">Bridge</span></h1>
+            <p id="form-subtitle" class="text-sm text-slate-500 mt-2 font-medium transition-opacity duration-300">Enterprise Procurement Portal</p>
+        </div>
+        
+        <div class="grid" style="grid-template-areas: 'form-stack';">
+            
+            <!-- LOGIN VIEW -->
+            <div id="login-view" class="transition-all duration-500 ease-in-out transform translate-x-0 opacity-100 visible pointer-events-auto" style="grid-area: form-stack;">
+                <form id="login-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Account Role</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                            </div>
+                            <select class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-all duration-200 hover:border-indigo-300 cursor-pointer text-slate-700 appearance-none shadow-sm">
+                                <option value="officer">Procurement Officer</option>
+                                <option value="vendor">Vendor Partner</option>
+                                <option value="manager">Department Manager</option>
+                                <option value="admin">System Admin</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Work Email</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" /></svg>
+                            </div>
+                            <input type="email" id="login-email" required placeholder="name@company.com" class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-all duration-200 hover:border-indigo-300 shadow-sm placeholder:text-slate-400">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label class="block text-sm font-semibold text-slate-700">Password</label>
+                            <a href="#" onclick="toggleView('forgot', event)" class="text-xs font-medium text-indigo-600 hover:text-indigo-800 hover:underline transition-colors cursor-pointer">Forgot password?</a>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                            </div>
+                            <input type="password" id="login-password" required placeholder="••••••••" class="w-full pl-10 pr-10 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-all duration-200 hover:border-indigo-300 shadow-sm placeholder:text-slate-400">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <button type="button" onclick="togglePassword()" class="text-slate-400 hover:text-indigo-600 focus:outline-none transition-colors">
+                                    <svg id="eye-icon" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center text-sm mt-2">
+                        <label class="flex items-center text-slate-600">
+                            <input type="checkbox" class="mr-2 h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer transition-all"> 
+                            <span class="font-medium">Keep me signed in</span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" id="login-btn" class="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 text-white py-3 rounded-xl font-bold text-lg hover:from-indigo-700 hover:to-indigo-800 transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-indigo-500/30 transition-all duration-200 focus:ring-4 focus:ring-indigo-500/50">
+                        Access Portal
+                    </button>
+                </form>
+                
+                <div class="mt-8 text-center text-sm text-slate-600 pt-6 border-t border-slate-200/60">
+                    New to VendorBridge? <a href="#" onclick="toggleView('register', event)" class="text-indigo-600 font-bold hover:text-indigo-800 hover:underline transition-colors cursor-pointer">Register your business</a>
+                </div>
+            </div>
+
+            <!-- REGISTER VIEW -->
+            <div id="register-view" class="transition-all duration-500 ease-in-out transform translate-x-8 opacity-0 invisible pointer-events-none" style="grid-area: form-stack;">
+                <form id="register-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Company Name</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            </div>
+                            <input type="text" id="reg-company" required placeholder="Acme Corporation" class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-200 hover:border-purple-300 shadow-sm placeholder:text-slate-400">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Business Email</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" /></svg>
+                            </div>
+                            <input type="email" id="reg-email" required placeholder="name@company.com" class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-200 hover:border-purple-300 shadow-sm placeholder:text-slate-400">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Create Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                            </div>
+                            <input type="password" id="reg-password" required minlength="6" placeholder="••••••••" class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-200 hover:border-purple-300 shadow-sm placeholder:text-slate-400">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="reg-btn" class="w-full mt-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-xl font-bold text-lg hover:from-purple-700 hover:to-indigo-700 transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-indigo-500/30 transition-all duration-200 focus:ring-4 focus:ring-indigo-500/50">
+                        Create Account
+                    </button>
+                </form>
+                
+                <div class="mt-8 text-center text-sm text-slate-600 pt-6 border-t border-slate-200/60">
+                    Already registered? <a href="#" onclick="toggleView('login', event)" class="text-indigo-600 font-bold hover:text-indigo-800 hover:underline transition-colors cursor-pointer">Sign in here</a>
+                </div>
+            </div>
+
+            <!-- FORGOT PASSWORD VIEW -->
+            <div id="forgot-view" class="transition-all duration-500 ease-in-out transform translate-x-8 opacity-0 invisible pointer-events-none" style="grid-area: form-stack;">
+                <!-- Step 1: Email Input -->
+                <form id="forgot-step-1" onsubmit="sendCode(event)" class="space-y-6">
+                    <p class="text-sm text-slate-600 text-center mb-2">Enter your registered email address and we'll send you a recovery code.</p>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Registered Email</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" /></svg>
+                            </div>
+                            <input type="email" id="recovery-email" required placeholder="name@company.com" class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-all duration-200 hover:border-indigo-300 shadow-sm placeholder:text-slate-400">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full flex items-center justify-center bg-gradient-to-r from-slate-700 to-slate-800 text-white py-3 rounded-xl font-bold text-lg hover:from-slate-800 hover:to-slate-900 transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-slate-500/30 transition-all duration-200 focus:ring-4 focus:ring-slate-500/50">
+                        Send Recovery Code
+                    </button>
+                </form>
+
+                <!-- Step 2: OTP Verification -->
+                <form id="forgot-step-2" onsubmit="verifyCode(event)" class="space-y-6 hidden">
+                    <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl text-center">
+                        <p class="text-sm text-indigo-800 font-medium">A 6-digit code has been sent to your email.</p>
+                        <p class="text-xs text-indigo-600 mt-1">Hint: Use <span class="font-bold">123456</span> for this demo</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1.5 text-center">Enter 6-Digit Code</label>
+                        <input type="text" id="recovery-code" required placeholder="••••••" maxlength="6" class="w-full text-center tracking-[0.5em] font-bold text-2xl py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-all duration-200 hover:border-indigo-300 shadow-sm placeholder:text-slate-300 placeholder:tracking-normal placeholder:font-normal placeholder:text-base">
+                    </div>
+                    <button type="submit" class="w-full flex items-center justify-center bg-gradient-to-r from-indigo-600 to-indigo-700 text-white py-3 rounded-xl font-bold text-lg hover:from-indigo-700 hover:to-indigo-800 transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-indigo-500/30 transition-all duration-200 focus:ring-4 focus:ring-indigo-500/50">
+                        Verify Code
+                    </button>
+                </form>
+
+                <!-- Step 3: Show Password Success -->
+                <div id="forgot-step-3" class="hidden text-center space-y-6">
+                    <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2 shadow-inner">
+                        <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-800">Identity Verified!</h3>
+                    <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl inline-block w-full">
+                        <p class="text-sm text-slate-500 mb-2">Your current account password is:</p>
+                        <p class="text-xl font-bold text-indigo-700 tracking-wider font-mono bg-white py-2 rounded-lg border border-slate-100 shadow-sm">DemoPass2026</p>
+                    </div>
+                    <button onclick="toggleView('login', event)" class="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3 rounded-xl font-bold text-lg hover:from-emerald-600 hover:to-emerald-700 transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-500/30 transition-all duration-200">
+                        Back to Login
+                    </button>
+                </div>
+
+                <div class="mt-8 text-center text-sm text-slate-600 pt-6 border-t border-slate-200/60" id="forgot-footer">
+                    Remember your password? <a href="#" onclick="toggleView('login', event)" class="text-indigo-600 font-bold hover:text-indigo-800 hover:underline transition-colors cursor-pointer">Sign in here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('login-password');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />';
+            }
+        }
+
+        // Check if user is already logged in
+        async function checkAuth() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                window.location.href = 'dashboard.html';
+            }
+        }
+        checkAuth();
+
+        function toggleView(view, event) {
+            if (event) event.preventDefault();
+            const views = ['login', 'register', 'forgot'];
+            const subtitle = document.getElementById('form-subtitle');
+            
+            subtitle.style.opacity = '0';
+            
+            setTimeout(() => {
+                if (view === 'register') {
+                    subtitle.textContent = "Register Your Business Account";
+                } else if (view === 'forgot') {
+                    subtitle.textContent = "Password Recovery";
+                    document.getElementById('forgot-step-1').classList.remove('hidden');
+                    document.getElementById('forgot-step-2').classList.add('hidden');
+                    document.getElementById('forgot-step-3').classList.add('hidden');
+                    document.getElementById('forgot-footer').classList.remove('hidden');
+                    document.getElementById('recovery-email').value = '';
+                    document.getElementById('recovery-code').value = '';
+                } else {
+                    subtitle.textContent = "Enterprise Procurement Portal";
+                }
+                
+                views.forEach(v => {
+                    const el = document.getElementById(`${v}-view`);
+                    if (v === view) {
+                        el.classList.remove('translate-x-8', '-translate-x-8', 'opacity-0', 'invisible', 'pointer-events-none');
+                        el.classList.add('translate-x-0', 'opacity-100', 'visible', 'pointer-events-auto');
+                    } else {
+                        el.classList.remove('translate-x-0', 'opacity-100', 'visible', 'pointer-events-auto');
+                        el.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+                        // સ્મૂથ એનિમેશન દિશા માટે:
+                        el.classList.add(view === 'login' ? 'translate-x-8' : '-translate-x-8');
+                    }
+                });
+                
+                subtitle.style.opacity = '1';
+            }, 200);
+        }
+
+        function sendCode(event) {
+            event.preventDefault();
+            const btn = event.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Sending Code... <svg class="animate-spin ml-2 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+            
+            // 1.5 સેકન્ડનું લોડિંગ
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                document.getElementById('forgot-step-1').classList.add('hidden');
+                document.getElementById('forgot-step-2').classList.remove('hidden');
+            }, 1500);
+        }
+
+        function verifyCode(event) {
+            event.preventDefault();
+            const code = document.getElementById('recovery-code').value;
+            const btn = event.target.querySelector('button');
+            
+            if (code !== '123456') {
+                alert('Invalid code. Please try entering 123456.');
+                return;
+            }
+
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Verifying... <svg class="animate-spin ml-2 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+            
+            // 1 સેકન્ડનું લોડિંગ
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                document.getElementById('forgot-step-2').classList.add('hidden');
+                document.getElementById('forgot-step-3').classList.remove('hidden');
+                document.getElementById('forgot-footer').classList.add('hidden');
+            }, 1000);
+        }
+
+        // ==========================================
+        // SUPABASE BACKEND INTEGRATION SETUP
+        // ==========================================
+        // Supabase Project URL
+        const _SUPABASE_URL = 'https://yuyitzuvsvxqsgnnubkt.supabase.co';
+        const _SUPABASE_ANON_KEY = 'sb_publishable_cors7Lu_jy4KPVKN44e7dQ_YgnYWcCs';
+        
+        const supabaseClient = window.supabase.createClient(_SUPABASE_URL, _SUPABASE_ANON_KEY);
+
+        // ==========================================
+        // SUPABASE LOGIN LOGIC
+        // ==========================================
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault(); // फॉर्म को बिना चेक किए सबमिट होने से रोकना
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const btn = document.getElementById('login-btn');
+            const originalText = btn.innerHTML;
+            
+            // लोडिंग एनीमेशन दिखाएं
+            btn.innerHTML = 'Verifying... <svg class="animate-spin ml-2 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+            
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                alert("Login Failed: " + error.message);
+                btn.innerHTML = originalText;
+            } else {
+                // सफल होने पर डैशबोर्ड पर भेजें
+                window.location.href = 'dashboard.html';
+            }
+        });
+
+        // ==========================================
+        // SUPABASE REGISTER LOGIC
+        // ==========================================
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+            
+            const company = document.getElementById('reg-company').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const btn = document.getElementById('reg-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = 'Creating... <svg class="animate-spin ml-2 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+
+            const { data, error } = await supabaseClient.auth.signUp({
+                email: email,
+                password: password,
+                options: { data: { company_name: company, role: 'vendor' } }
+            });
+
+            if (error) {
+                alert("Registration Failed: " + error.message);
+                btn.innerHTML = originalText;
+            } else {
+                alert("Account Created Successfully! You can now Sign in.");
+                toggleView('login', null);
+                btn.innerHTML = originalText;
+            }
+        });
+    </script>
+</body>
+</html>

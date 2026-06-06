@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VendorBridge - RFQ Creation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 flex">
+    <aside class="w-64 bg-slate-900 text-white min-h-screen p-5 flex flex-col justify-between">
+        <div>
+            <div class="text-2xl font-bold text-indigo-400 mb-8 px-2">VendorBridge</div>
+            <!-- QUICK SEARCH BUTTON -->
+            <button onclick="openSmartSearch()" class="w-full mb-6 flex items-center justify-between px-3 py-2 bg-slate-800 text-slate-400 rounded-lg hover:bg-slate-700 hover:text-white transition border border-slate-700 text-sm group">
+                <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-slate-500 group-hover:text-slate-300 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    Quick Search...
+                </span>
+                <kbd class="bg-slate-900 border border-slate-700 px-1.5 py-0.5 rounded text-[10px] text-slate-500 font-mono shadow-sm">Ctrl K</kbd>
+            </button>
+            <nav class="space-y-2">
+                <a href="dashboard.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Dashboard</a>
+                <a href="catalog.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Product Catalog</a>
+                <a href="vendors.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Vendors</a>
+                <a href="rfqs.html" class="block px-4 py-2.5 rounded bg-slate-800 text-white font-medium">RFQs</a>
+                <a href="quotations.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Quotations</a>
+                <a href="approvals.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Approvals</a>
+                <a href="documents.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Orders & Invoices</a>
+                <a href="logs-reports.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Logs & Analytics</a>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8">
+        <h1 class="text-3xl font-bold text-slate-800 mb-6">Create New RFQ Pipeline</h1>
+        
+        <div class="bg-white p-8 rounded-xl border border-slate-100 shadow-sm max-w-3xl">
+            <form class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">RFQ Title / Subject</label>
+                        <input type="text" placeholder="e.g. Server Infrastructure Upgrade" class="w-full mt-1 p-2.5 border border-slate-300 rounded-lg focus:ring-1 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Submission Deadline</label>
+                        <input type="date" class="w-full mt-1 p-2.5 border border-slate-300 rounded-lg focus:ring-1 focus:ring-indigo-500 outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">Product / Service Specifications</label>
+                    <textarea rows="4" placeholder="Detailed description of components, quantities, model metrics required..." class="w-full mt-1 p-2.5 border border-slate-300 rounded-lg focus:ring-1 focus:ring-indigo-500 outline-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Select Target Vendor Category</label>
+                        <select class="w-full mt-1 p-2.5 border border-slate-300 rounded-lg focus:ring-1 focus:ring-indigo-500 outline-none">
+                            <option>Hardware IT Vendors</option>
+                            <option>All Network Vendors</option>
+                            <option>General Support & Logistics</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Technical Document Attachment</label>
+                        <input type="file" class="w-full mt-1 text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                    <button type="button" class="px-5 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50">Save Draft</button>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-semibold shadow-sm">Dispatch RFQ</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- SMART COMMAND CENTER MODAL -->
+    <div id="smart-search-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] hidden items-start justify-center pt-[15vh]">
+        <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-200" id="smart-search-box">
+            <div class="flex items-center px-4 py-4 border-b border-slate-100">
+                <svg class="w-6 h-6 text-indigo-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" id="smart-search-input" class="w-full text-lg outline-none text-slate-700 placeholder-slate-400 font-medium" placeholder="Search vendors, RFQs, invoices, or commands...">
+                <button onclick="closeSmartSearch()" class="text-xs bg-slate-100 text-slate-500 px-2 py-1 rounded font-bold hover:bg-slate-200 transition">ESC</button>
+            </div>
+            <div class="max-h-96 overflow-y-auto p-2 bg-slate-50" id="smart-search-results"></div>
+            <div class="bg-slate-100 px-4 py-2.5 text-xs text-slate-500 flex justify-between border-t border-slate-200/60">
+                <span>Navigate easily across the portal</span>
+                <span><kbd class="bg-white border border-slate-200 px-1.5 py-0.5 rounded shadow-sm">Enter</kbd> to open</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // SMART SEARCH LOGIC
+        const searchModal = document.getElementById('smart-search-modal');
+        const searchBox = document.getElementById('smart-search-box');
+        const searchInput = document.getElementById('smart-search-input');
+        const searchResults = document.getElementById('smart-search-results');
+
+        const searchData = [
+            { title: 'Create New RFQ Pipeline', type: 'Quick Action', icon: '⚡', link: 'rfqs.html' },
+            { title: 'Product Catalog & Internal Purchases', type: 'Marketplace', icon: '🛒', link: 'catalog.html' },
+            { title: 'Matrix Tech Solved Ltd.', type: 'Vendor Profile', icon: '🏢', link: 'vendors.html' },
+            { title: 'High-Core Servers Procurement', type: 'Active RFQ', icon: '📋', link: 'rfqs.html' },
+            { title: 'Invoice INV-2026-8942', type: 'Logistics Document', icon: '📄', link: 'documents.html' },
+            { title: 'Pending Approval: RFQ-2026-001', type: 'Manager Task', icon: '✅', link: 'approvals.html' },
+            { title: 'Export System Audit Logs (CSV)', type: 'Report', icon: '📊', link: 'logs-reports.html' }
+        ];
+
+        function openSmartSearch() {
+            searchModal.classList.remove('hidden'); searchModal.classList.add('flex');
+            setTimeout(() => {
+                searchBox.classList.remove('scale-95', 'opacity-0'); searchBox.classList.add('scale-100', 'opacity-100');
+                searchInput.focus(); renderResults('');
+            }, 10);
+        }
+
+        function closeSmartSearch() {
+            searchBox.classList.remove('scale-100', 'opacity-100'); searchBox.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => { searchModal.classList.add('hidden'); searchModal.classList.remove('flex'); }, 200);
+        }
+
+        function renderResults(query) {
+            const filtered = searchData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()) || item.type.toLowerCase().includes(query.toLowerCase()));
+            if(filtered.length === 0) {
+                searchResults.innerHTML = `<div class="text-center py-8 text-slate-400 font-medium">No results found for "${query}"</div>`; return;
+            }
+            searchResults.innerHTML = filtered.map(item => `
+                <a href="${item.link}" class="flex items-center p-3 rounded-xl hover:bg-white transition shadow-sm cursor-pointer group border border-transparent hover:border-indigo-100 mt-1">
+                    <div class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-lg shadow-sm group-hover:scale-110 transition-transform">${item.icon}</div>
+                    <div class="ml-4"><div class="text-sm font-bold text-slate-800">${item.title}</div><div class="text-xs text-slate-500 font-medium">${item.type}</div></div>
+                    <svg class="w-5 h-5 ml-auto text-slate-300 group-hover:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            `).join('');
+        }
+
+        searchInput.addEventListener('input', (e) => renderResults(e.target.value));
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openSmartSearch(); }
+            if (e.key === 'Escape' && !searchModal.classList.contains('hidden')) closeSmartSearch();
+        });
+        searchModal.addEventListener('click', (e) => { if (e.target === searchModal) closeSmartSearch(); });
+    </script>
+</body>
+</html>

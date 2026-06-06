@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VendorBridge - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for Graph Analysis -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-50 flex">
+    <aside class="w-64 bg-slate-900 text-white min-h-screen p-5 flex flex-col justify-between">
+        <div>
+            <div class="text-2xl font-bold text-indigo-400 mb-8 px-2">VendorBridge</div>
+            <!-- QUICK SEARCH BUTTON -->
+            <button onclick="openSmartSearch()" class="w-full mb-6 flex items-center justify-between px-3 py-2 bg-slate-800 text-slate-400 rounded-lg hover:bg-slate-700 hover:text-white transition border border-slate-700 text-sm group">
+                <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-slate-500 group-hover:text-slate-300 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    Quick Search...
+                </span>
+                <kbd class="bg-slate-900 border border-slate-700 px-1.5 py-0.5 rounded text-[10px] text-slate-500 font-mono shadow-sm">Ctrl K</kbd>
+            </button>
+            <nav class="space-y-2">
+                <a href="dashboard.html" class="block px-4 py-2.5 rounded bg-slate-800 text-white font-medium">Dashboard</a>
+                <a href="catalog.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition flex items-center justify-between">Product Catalog <span class="bg-indigo-600 text-white text-[10px] px-2 py-0.5 rounded-full">New</span></a>
+                <a href="vendors.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Vendors</a>
+                <a href="rfqs.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">RFQs</a>
+                <a href="quotations.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Quotations</a>
+                <a href="approvals.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Approvals</a>
+                <a href="documents.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Orders & Invoices</a>
+                <a href="logs-reports.html" class="block px-4 py-2.5 rounded text-slate-400 hover:bg-slate-800 hover:text-white transition">Logs & Analytics</a>
+            </nav>
+        </div>
+        <div class="border-t border-slate-800 pt-4 text-sm text-slate-400 px-2">
+            Logged in as: <span class="text-white block font-medium">Procurement Officer</span>
+            <a href="index.html" class="text-red-400 hover:underline mt-2 inline-block">Logout</a>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8">
+        <header class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-800">Welcome back, Team</h1>
+                <p class="text-slate-500">Overview of current procurement pipelines.</p>
+            </div>
+            <div class="flex gap-3">
+                <a href="rfqs.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-700 transition">+ New RFQ</a>
+            </div>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm">
+                <div class="text-sm font-medium text-slate-400 uppercase">Active RFQs</div>
+                <div class="text-2xl font-bold text-slate-800 mt-1">12</div>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm">
+                <div class="text-sm font-medium text-slate-400 uppercase">Pending Approvals</div>
+                <div class="text-2xl font-bold text-amber-600 mt-1">4</div>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm">
+                <div class="text-sm font-medium text-slate-400 uppercase">Purchase Orders</div>
+                <div class="text-2xl font-bold text-slate-800 mt-1">28</div>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm">
+                <div class="text-sm font-medium text-slate-400 uppercase">Total Monthly Spend</div>
+                <div class="text-2xl font-bold text-emerald-600 mt-1">₹4,85,000</div>
+            </div>
+        </section>
+
+        <!-- GRAPH ANALYSIS SECTION (NEW) -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6 lg:col-span-2 hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold text-slate-800">Procurement Spend Analytics (YTD)</h3>
+                    <select class="text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 outline-none focus:ring-2 focus:ring-indigo-500 font-medium text-slate-600 cursor-pointer">
+                        <option>Year 2026</option>
+                        <option>Year 2025</option>
+                    </select>
+                </div>
+                <div class="relative h-72 w-full">
+                    <canvas id="spendLineChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6 hover:shadow-md transition-shadow">
+                <h3 class="text-lg font-bold text-slate-800 mb-4">Spend by Category</h3>
+                <div class="relative h-64 w-full flex items-center justify-center">
+                    <canvas id="categoryPieChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+            <h3 class="text-lg font-bold text-slate-800 mb-4">Recent Procurement Workflows</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-slate-200 text-slate-400 text-sm font-medium">
+                            <th class="pb-3">RFQ ID</th>
+                            <th class="pb-3">Title</th>
+                            <th class="pb-3">Assigned Vendors</th>
+                            <th class="pb-3">Target Date</th>
+                            <th class="pb-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-600 text-sm divide-y divide-slate-100">
+                        <tr>
+                            <td class="py-3 font-semibold text-indigo-600">RFQ-2026-001</td>
+                            <td class="py-3">High-Core Servers Procurement</td>
+                            <td class="py-3">3 Vendors</td>
+                            <td class="py-3">15-Jun-2026</td>
+                            <td class="py-3"><span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-semibold">Bidding Open</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 font-semibold text-indigo-600">RFQ-2026-002</td>
+                            <td class="py-3">Networking Switches & Cables</td>
+                            <td class="py-3">2 Vendors</td>
+                            <td class="py-3">20-Jun-2026</td>
+                            <td class="py-3"><span class="bg-amber-50 text-amber-700 px-2 py-1 rounded text-xs font-semibold">Under Evaluation</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 1. Line Chart Setup (Monthly Spend)
+        const ctxLine = document.getElementById('spendLineChart').getContext('2d');
+        
+        // Create gradient for Line Chart
+        const gradientFill = ctxLine.createLinearGradient(0, 0, 0, 300);
+        gradientFill.addColorStop(0, 'rgba(79, 70, 229, 0.4)'); // Indigo 600 at top
+        gradientFill.addColorStop(1, 'rgba(79, 70, 229, 0.0)'); // Transparent at bottom
+
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Monthly Spend (₹)',
+                    data: [125000, 210000, 180000, 320000, 260000, 485000],
+                    borderColor: '#4f46e5', // Indigo 600
+                    backgroundColor: gradientFill,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#4f46e5',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: true,
+                    tension: 0.4 // Smooth curves
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        padding: 12,
+                        titleFont: { size: 13 },
+                        bodyFont: { size: 14, weight: 'bold' },
+                        callbacks: {
+                            label: function(context) { return ' ₹' + context.parsed.y.toLocaleString('en-IN'); }
+                        }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { borderDash: [4, 4], color: '#f1f5f9' }, border: { display: false } },
+                    x: { grid: { display: false }, border: { display: false } }
+                }
+            }
+        });
+
+        // 2. Doughnut Chart Setup (Category Distribution)
+        const ctxPie = document.getElementById('categoryPieChart').getContext('2d');
+        new Chart(ctxPie, {
+            type: 'doughnut',
+            data: {
+                labels: ['Hardware IT', 'Networking', 'Office Supplies', 'Logistics'],
+                datasets: [{
+                    data: [55, 25, 12, 8],
+                    backgroundColor: ['#4f46e5', '#0ea5e9', '#10b981', '#f59e0b'],
+                    borderWidth: 0,
+                    hoverOffset: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20, font: { family: "'Inter', sans-serif" } } }
+                },
+                cutout: '75%' // Thin elegant doughnut ring
+            }
+        });
+    </script>
+
+    <!-- SMART COMMAND CENTER MODAL -->
+    <div id="smart-search-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] hidden items-start justify-center pt-[15vh]">
+        <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-200" id="smart-search-box">
+            <div class="flex items-center px-4 py-4 border-b border-slate-100">
+                <svg class="w-6 h-6 text-indigo-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" id="smart-search-input" class="w-full text-lg outline-none text-slate-700 placeholder-slate-400 font-medium" placeholder="Search vendors, RFQs, invoices, or commands...">
+                <button onclick="closeSmartSearch()" class="text-xs bg-slate-100 text-slate-500 px-2 py-1 rounded font-bold hover:bg-slate-200 transition">ESC</button>
+            </div>
+            <div class="max-h-96 overflow-y-auto p-2 bg-slate-50" id="smart-search-results"></div>
+            <div class="bg-slate-100 px-4 py-2.5 text-xs text-slate-500 flex justify-between border-t border-slate-200/60">
+                <span>Navigate easily across the portal</span>
+                <span><kbd class="bg-white border border-slate-200 px-1.5 py-0.5 rounded shadow-sm">Enter</kbd> to open</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // SMART SEARCH LOGIC
+        const searchModal = document.getElementById('smart-search-modal');
+        const searchBox = document.getElementById('smart-search-box');
+        const searchInput = document.getElementById('smart-search-input');
+        const searchResults = document.getElementById('smart-search-results');
+
+        const searchData = [
+            { title: 'Create New RFQ Pipeline', type: 'Quick Action', icon: '⚡', link: 'rfqs.html' },
+            { title: 'Product Catalog & Internal Purchases', type: 'Marketplace', icon: '🛒', link: 'catalog.html' },
+            { title: 'Matrix Tech Solved Ltd.', type: 'Vendor Profile', icon: '🏢', link: 'vendors.html' },
+            { title: 'High-Core Servers Procurement', type: 'Active RFQ', icon: '📋', link: 'rfqs.html' },
+            { title: 'Invoice INV-2026-8942', type: 'Logistics Document', icon: '📄', link: 'documents.html' },
+            { title: 'Pending Approval: RFQ-2026-001', type: 'Manager Task', icon: '✅', link: 'approvals.html' },
+            { title: 'Export System Audit Logs (CSV)', type: 'Report', icon: '📊', link: 'logs-reports.html' }
+        ];
+
+        function openSmartSearch() {
+            searchModal.classList.remove('hidden'); searchModal.classList.add('flex');
+            setTimeout(() => {
+                searchBox.classList.remove('scale-95', 'opacity-0'); searchBox.classList.add('scale-100', 'opacity-100');
+                searchInput.focus(); renderResults('');
+            }, 10);
+        }
+
+        function closeSmartSearch() {
+            searchBox.classList.remove('scale-100', 'opacity-100'); searchBox.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => { searchModal.classList.add('hidden'); searchModal.classList.remove('flex'); }, 200);
+        }
+
+        function renderResults(query) {
+            const filtered = searchData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()) || item.type.toLowerCase().includes(query.toLowerCase()));
+            if(filtered.length === 0) {
+                searchResults.innerHTML = `<div class="text-center py-8 text-slate-400 font-medium">No results found for "${query}"</div>`; return;
+            }
+            searchResults.innerHTML = filtered.map(item => `
+                <a href="${item.link}" class="flex items-center p-3 rounded-xl hover:bg-white transition shadow-sm cursor-pointer group border border-transparent hover:border-indigo-100 mt-1">
+                    <div class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-lg shadow-sm group-hover:scale-110 transition-transform">${item.icon}</div>
+                    <div class="ml-4"><div class="text-sm font-bold text-slate-800">${item.title}</div><div class="text-xs text-slate-500 font-medium">${item.type}</div></div>
+                    <svg class="w-5 h-5 ml-auto text-slate-300 group-hover:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            `).join('');
+        }
+
+        searchInput.addEventListener('input', (e) => renderResults(e.target.value));
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openSmartSearch(); }
+            if (e.key === 'Escape' && !searchModal.classList.contains('hidden')) closeSmartSearch();
+        });
+        searchModal.addEventListener('click', (e) => { if (e.target === searchModal) closeSmartSearch(); });
+    </script>
+</body>
+</html>
